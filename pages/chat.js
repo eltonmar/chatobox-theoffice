@@ -1,5 +1,5 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
-import React from 'react';
+import React, { useState } from 'react';
 import appConfig from '../config.json';
 
 export default function ChatPage() {
@@ -21,12 +21,12 @@ export default function ChatPage() {
     function cuidaDaMensagem(novaMensagem) {
         const mensagem = {
             de: 'eltonmar',
-            id: listaDeMensagem.length +1,
+            id: listaDeMensagem.length + 1,
             texto: novaMensagem,
         }
         //Chamada de um backend
         setlistaDeMensagem([
-            mensagem, 
+            mensagem,
             ...listaDeMensagem,
         ])
         setMensagem('')
@@ -95,6 +95,7 @@ export default function ChatPage() {
                                 }
                             }}
 
+
                             placeholder="Insira sua mensagem aqui..."
                             type="textarea"
                             styleSheet={{
@@ -106,6 +107,30 @@ export default function ChatPage() {
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                            }}
+                        />
+                        <Button
+                            label='Enviar'
+                            type='submit'
+                            value={mensagem}
+                            onChange={() => {
+                                useState(mensagem)
+
+                            }}
+
+
+                            onClick={
+                                (evento) => {
+
+                                    evento.preventDefault()
+                                    cuidaDaMensagem(mensagem)
+                                }}
+
+                            buttonColors={{
+                                contrastColor: appConfig.theme.colors.neutrals["000"],
+                                mainColor: appConfig.theme.colors.primary[500],
+                                mainColorLight: appConfig.theme.colors.primary[400],
+                                mainColorStrong: appConfig.theme.colors.primary[600],
                             }}
                         />
                     </Box>
@@ -157,21 +182,21 @@ function MessageList(props) {
                             padding: '6px',
                             marginBottom: '12px',
                             hover: {
-                                backgroundColor: appConfig.theme.colors.neutrals[200],
+                                backgroundColor: appConfig.theme.colors.neutrals['000'],
                             }
                         }}
                     >
                         <Box
                             styleSheet={{
-                                marginBottom: '8px',
+                                marginBottom: '2px',
                             }}
                         >
                             <Image
                                 styleSheet={{
-                                    width: '2000px',
-                                    height: '20px',
+                                    width: '10px',
+                                    height: '10px',
                                     borderRadius: '50%',
-                                    display: 'inline-block',
+                                    display: 'inline',
                                     marginRight: '8px',
                                 }}
                                 src={`https://github.com/eltonmar.png`}
@@ -185,7 +210,6 @@ function MessageList(props) {
                                     marginLeft: '8px',
                                     color: appConfig.theme.colors.neutrals[300],
                                 }}
-                                tag="span"
                             >
                                 {(new Date().toLocaleDateString())}
                             </Text>
